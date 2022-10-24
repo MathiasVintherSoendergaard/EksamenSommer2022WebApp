@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!--Own external CSS-->
+    <link rel="stylesheet" href="style.css">
+    <!--intern CSS-->
+    <style>
+        body {
+            background-color: azure;
+        }
+    </style>
+    <title>Eksamen Sommer 2022</title>
+</head>
+
+<body>
+    <div id="app">
+        <table class="table table table-hover" v-if="cyclists.length > 0">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>YEAR OF BIRTH</th>
+            </tr>
+            <!--Inline CSS-->
+            <tr v-for="cyclist in cyclists" style="background-color: white;">
+                <th>{{cyclist.id}}</th>
+                <th>{{cyclist.name}}</th>
+                <th>{{cyclist.yearOfBirth}}</th>
+            </tr>
+        </table>
+        <div v-else>No cyclists found</div>
+        <button v-on:click="sortListAsc()" type="button" class="btn btn-primary">Sort ascending</button>
+        <button v-on:click="sortListDesc()" type="button" class="btn btn-primary">Sort descending</button>
+        <button v-on:click="sortById()" type="button" class="btn btn-primary">Default</button><br>
+        <h2>Filter cyclists by latest birth year</h2>
+        <input type="number" v-model="latestBirthYear">
+        <button v-on:click="filterList()" type="button" class="btn btn-primary">Filter</button><br>
+
+        <h2>Get cyclist by ID</h2>
+        <input type="number" v-model="getId">
+        <button v-on:click="getCyclistById()" type="button" class="btn btn-primary">Get cyclist</button><br>
+        <ul v-if="gottenCyclist.id != 0">
+            <li>
+                Id: {{gottenCyclist.id}} - Name: {{gottenCyclist.name}} - Year of birth: {{gottenCyclist.yearOfBirth}}
+            </li>
+        </ul>
+        <!--
+            <table class="table table table-hover" v-if="gottenCyclist.id != 0">
+            <tr>
+                <th>{{gottenCyclist.id}}</th>
+                <th>{{gottenCyclist.name}}</th>
+                <th>{{gottenCyclist.yearOfBirth}}</th>
+            </tr>
+        </table>
+        -->
+        <h2>Add new cyclist</h2>
+        Name of cyclist: <br>
+        <input type="text" v-model="newCyclist.name"><br>
+        Cyclist's year of birth: <br>
+        <input type="number" v-model="newCyclist.yearOfBirth">
+        <button v-on:click="addCyclist()" type="button" class="btn btn-primary">Add Cyclist</button><br>
+        <div v-if="addMessage">{{addMessage}}</div>
+        <h2>Delete cyclist</h2>
+        <input type="number" v-model="deleteId">
+        <button v-on:click="deleteCyclist()" type="button" class="btn btn-primary">Delete Cyclist</button><br>
+        <div v-if="deleteMessage">{{deleteMessage}}</div>
+        <table class="table table table-hover" v-if="deletedCyclist.id != 0">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>YEAR OF BIRTH</th>
+            </tr>
+            <tr>
+                <th>{{deletedCyclist.id}}</th>
+                <th>{{deletedCyclist.name}}</th>
+                <th>{{deletedCyclist.yearOfBirth}}</th>
+            </tr>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
